@@ -104,7 +104,7 @@ dist
 .tern-port
 
 # Database connection
-.env
+# .env
 
 # idea of intellij
 .idea
