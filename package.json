@@ -1,0 +1,44 @@
+{
+  "type": "module",
+  "name": "online-academy-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "engines": {
+    "node": "14.x"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tientran505/online-academy-web.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tientran505/online-academy-web/issues"
+  },
+  "homepage": "https://github.com/tientran505/online-academy-web#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "bootstrap-star-rating": "^4.1.2",
+    "colog": "^1.0.4",
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.6",
+    "express-handlebars-sections": "^1.0.1",
+    "express-session": "^1.17.3",
+    "mdbootstrap": "^4.20.0",
+    "memorystore": "^1.6.7",
+    "moment": "^2.29.4",
+    "mongoose": "^6.8.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.8.0",
+    "numeral": "^2.0.6"
+  }
+}

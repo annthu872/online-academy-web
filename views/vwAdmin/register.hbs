@@ -1,0 +1,229 @@
+{{#section 'css'}}
+  <link
+    rel='stylesheet'
+    href='https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css'
+  />
+{{/section}}
+
+{{#section 'js'}}
+  <script
+    src='https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js'
+  ></script>
+
+  <script>
+    $('#txtDOB').datetimepicker({timepicker: false, format: 'd/m/Y', mask: true});
+
+    $('#frmRegister').on('submit', (e) => { 
+      e.preventDefault(); 
+      const username = $('#txtUsername').val(); 
+      const password = $('#txtPassword').val(); 
+      const password1 = $('#txtPassword1').val(); 
+      const name = $('#txtName').val(); 
+      const email = $('#txtEmail').val(); 
+      const dob = $('#txtDOB').val();
+      let isValidForm = true;
+      
+      $('#txtUsername').addClass('is-valid').removeClass('is-invalid');
+      if (username.length === 0) { 
+        $('#txtUsername').removeClass('is-valid').addClass('is-invalid');
+        $('#usernameFeedback').text('Username is required');  
+        isValidForm = false;
+      } 
+
+      $('#txtPassword').addClass('is-valid').removeClass('is-invalid');
+      if (password.length === 0) {
+        $('#txtPassword').removeClass('is-valid').addClass('is-invalid');
+        $('#passwordFeedback').text('Password is required');  
+        isValidForm = false;
+      }
+
+      $('#txtDOB').addClass('is-valid').removeClass('is-invalid');
+      if (dob.length === 0 || dob === '__/__/____') {
+        $('#txtDOB').removeClass('is-valid').addClass('is-invalid');
+        $('#dobFeedback').text('Birthday is required');  
+        isValidForm = false;
+      }
+
+      $('#txtPassword1').addClass('is-valid').removeClass('is-invalid');
+      if (password1.length === 0) {
+        $('#txtPassword1').removeClass('is-valid').addClass('is-invalid');
+        $('#password1Feedback').text('Password is required');  
+        isValidForm = false;
+      }
+      else if (password !== password1) { 
+        $('#txtPassword1').removeClass('is-valid').addClass('is-invalid')
+        $('#password1Feedback').text('Password does not match');  
+        isValidForm = false;
+      }
+
+      $('#txtName').addClass('is-valid').removeClass('is-invalid');
+      if (name.length === 0) {
+        $('#txtName').removeClass('is-valid').addClass('is-invalid')
+        $('#nameFeedback').text('Name is required');  
+        isValidForm = false;
+      } 
+      
+      $('#txtEmail').addClass('is-valid');
+      if (email.length === 0) {
+        $('#txtEmail').removeClass('is-valid').addClass('is-invalid');
+        $('#emailFeedback').text('Email is required');  
+        isValidForm = false;
+      }
+
+      
+
+      if (isValidForm) { 
+        $.getJSON(`/admin/register/valid-user?username=${username}&email=${email}`, (data) => {
+          if (!data.userExist || !data.emailExist) {
+            if (!data.userExist) {
+              $('#txtUsername').removeClass('is-valid').addClass('is-invalid');
+              $('#usernameFeedback').text('Username was used. Please enter another username'); 
+            }
+            else  {
+              $('#txtEmail').removeClass('is-valid').addClass('is-invalid');
+              $('#emailFeedback').text('Email was used. Please enter another email'); 
+            }
+          } 
+
+          else {
+          $('#frmRegister').off('submit').submit();
+         }
+        })
+      }  
+    });
+  </script>
+
+{{/section}}
+
+<div class='container-fluid p-0 m-0'>
+  <div class='row'>
+    <div class='col-sm-3'>
+      <div class='card'>
+        <h3 class='card-header'>
+          Admin Dashboard
+        </h3>
+        <div class='list-group list-group-flush'>
+          <a href='/admin/user' class='list-group-item list-group-item-action'>
+            <i class='fa fa-users mr-1' aria-hidden='true'></i>
+            User
+          </a>
+          <a href='/admin/category' class='list-group-item list-group-item-action'>
+            <i class='fa fa-list-alt mr-1' aria-hidden='true'></i>
+            Category
+          </a>
+          <a href='/admin/course' class='list-group-item list-group-item-action'>
+            <i class='fa fa-graduation-cap mr-1' aria-hidden='true'></i>
+            Course
+          </a>
+          <a href='/admin/register' class='list-group-item list-group-item-action active'>
+            <i class='fa fa-user-plus mr-1' aria-hidden='true'></i>
+            Lecturer Account Approve
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-sm-9'>
+      <div class='card'>
+        <h3 class='card-header'>
+          Teacher Registration Form
+        </h3>
+        <div class='card-body container-fluid'>
+  <div class='card-body'>
+    <form method='post' id='frmRegister'>
+      <h5 class='p0'>Account Information</h5>
+      <div class='form-group'>
+        <label for='txtUsername'>Username</label>
+        <input
+          type='text'
+          class='form-control'
+          placeholder='Enter your username'
+          id='txtUsername'
+          name='username'
+          aria-describedby="usernameFeedback"
+          autofocus
+        />
+        <div id="usernameFeedback" class="invalid-feedback ml-1">
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <label for='txtPassword'>Password</label>
+        <input
+          type='password'
+          class='form-control'
+          placeholder='Enter your password'
+          id='txtPassword'
+          aria-describedby="passwordFeedback"
+          name='password'
+        />
+        <div id="passwordFeedback" class="invalid-feedback ml-1">
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <label for='txtPassword1'>Confirm password</label>
+        <input
+          type='password'
+          class='form-control'
+          id='txtPassword1'
+          placeholder='Re-enter your password'
+          aria-describedby="password1Feedback"
+          name='password1'
+        />
+        <div id="password1Feedback" class="invalid-feedback ml-1">
+        </div>
+      </div>
+
+      <h5 class='mt-5'>Personal Information</h5>
+      <div class='form-group'>
+        <label for='txtName'>Full name</label>
+        <input
+          type='text'
+          class='form-control'
+          placeholder='Enter your full name'
+          id='txtName'
+          name='name'
+          aria-describedby="nameFeedback"
+        />
+        <div id="nameFeedback" class="invalid-feedback ml-1">
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <label for='txtEmail'>Emaill address</label>
+        <input
+          type='email'
+          class='form-control'
+          id='txtEmail'
+          aria-describedby='emailFeedback'
+          placeholder='Enter your email'
+          name='email'
+        />
+        <div id="emailFeedback" class="invalid-feedback ml-1">
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <label for='txtDOB'>Birthday</label>
+        <input
+          type='text'
+          class='form-control'
+          id='txtDOB'
+          name='dob'
+          aria-describedby='dobFeedback'
+        />
+        <div id="dobFeedback" class="invalid-feedback ml-1">
+        </div>
+      </div>
+
+      <button type='submit' class='btn btn-primary'>Submit</button>
+    </form>
+  </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

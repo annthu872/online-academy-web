@@ -1,0 +1,58 @@
+<div class='card h-100 justify-content-center align-items-center border-0'>
+  <div class='col-sm-5 border p-0'>
+    <h5 class='card-header text-center'>
+      Log in to your account
+    </h5>
+    <div class='card-body'>
+      <form method='post' id='frmRegister'>
+        <form>
+          <div class='form-group'>
+            <label class='font-weight-bold'>USERNAME</label>
+            <input
+              name='username'
+              type='text'
+              class='form-control'
+              placeholder='Enter your username'
+            />
+          </div>
+
+          <div class='form-group'>
+            <label class='font-weight-bold'>PASSWORD</label>
+            <input
+              name='password'
+              type='password'
+              class='form-control'
+              id='exampleInputPassword1'
+              placeholder='Enter your password'
+            />
+          </div>
+
+          {{#if this.errMessage}}
+            <div
+              class='alert alert-danger alert-dismissible fade show'
+              role='alert'
+            >
+              <strong>Login failed. </strong>
+              {{this.errMessage}}
+              <button
+                type='button'
+                class='close'
+                data-dismiss='alert'
+                aria-label='Close'
+              >
+                <span aria-hidden='true'>&times;</span>
+              </button>
+            </div>
+          {{/if}}
+
+          <button type='submit' class='btn btn-primary container-fluid'>
+            <span class='font-weight-bold'>
+              Log In
+            </span>
+          </button>
+        </form>
+      </form>
+    </div>
+  </div>
+
+</div>

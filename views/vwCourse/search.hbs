@@ -1,0 +1,132 @@
+<div class='card'>
+  <div class='card-title'>
+    <div class='d-flex justify-content-between mt-4 w-75 m-auto'>
+      <div>
+        <form method='post'>
+          <div class='form-group'>
+            <label for='exampleFormControlSelect1'><strong
+                class='display-4'
+              >Sorted by</strong></label>
+            <div class='d-flex'>
+              <div class='mr-2'>
+                <select
+                  class='form-control'
+                  id='exampleFormControlSelect1'
+                  name='select'
+                >
+                  {{#if this.rating}}
+                    <option value='rating' selected>Most Rating</option>
+                    <option value='price'>Lowest Price</option>
+                  {{else}}
+                    <option value='rating'>Most Rating</option>
+                    <option value='price' selected>Lowest Price</option>
+                  {{/if}}
+                </select>
+              </div>
+              <div>
+                <button
+                  type='submit'
+                  formaction='/course/search?q={{this.text}}'
+                  class='btn btn-primary form-control'
+                >Primary</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class='display-4 pt-4'>
+        <strong>{{this.numOfResult}} result(s) for "{{this.text}}"</strong>
+      </div>
+    </div>
+  </div>
+  {{#each this.list2}}
+    <div class='card-body'>
+      <div class='mb-12'>
+        <div
+          class='card h-100 border border-success'
+          style=' min-height: 180px;'
+        >
+          <div class='row no-gutters'>
+            <div class='col-md-3'>
+              <img
+                class='img-fluid img-thumbnail ml-4'
+                style=' min-width: 100px; min-height: 100px; background-color: rgba(255,0,0,0.1);'
+                src='/public/imgs/admin_avatar.png'
+                alt='{{course_name}}'
+                width='250px'
+                height='250px'
+                title='{{course_name}}'
+              />
+            </div>
+            <div class='col-md-7'>
+              <div class='card-body text-dark'>
+                <h5 class='card-title font-weight-bold'>{{course_name}}</h5>
+                <div class='mb-4'>
+                  <div class='mb-2'>
+                    {{author.name}}
+
+                  </div>
+                  <div>
+                    <a class='card-text text-dark'><b
+                        class='font-weight-bold text-danger'
+                      >{{rate}}</b>
+
+                      <i
+                        class='fa fa-star'
+                        style='color: gold'
+                        id='rate'
+                        aria-hidden='true'
+                      ></i>
+                      <a> 5000</a>
+                    </a>
+
+                  </div>
+                  Category:
+                  {{cateName}}
+                </div>
+                <div>
+                  <a
+                    class='btn btn-sm btn-outline-success'
+                    href='/detail/{{_id}}'
+                    role='button'
+                  >
+                    <i class='fa fa-eye' aria-hidden='true'></i>
+                    View Detail
+                  </a>
+
+                </div>
+              </div>
+            </div>
+            <div class='col p-3' style=' min-width: 80px; display: block;'>
+              <p
+                id='discount'
+                class='text-right text-decoration-line-through'
+                style='text-decoration: line-through;'
+              >đ{{format_number price}}</p>
+              <h5
+                id='sale'
+                class='card-title text-danger text-right'
+              >đ{{format_number sale}}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+
+  
+</div>
+ <div class="card-footer text-muted">
+        <nav class="d-flex flex-row-reverse bd-highlight">
+            <ul class="pagination">
+               <li class="page-item {{#if this.prePage}}{{else}}disabled{{/if}} ">
+                    <a class="page-link" href="{{path}}page={{this.prePage}}">Previous</a>
+                </li>
+        {{#each pageNumber}}
+      <li class="page-item {{#if isCurrent}}active{{/if}}"><a class="page-link" href="{{../path}}page={{value}}">{{value}}</a></li>
+        {{/each}}
+                </li>
+                <li class="page-item  {{#if this.nextPage}}{{else}}disabled{{/if}} "><a class="page-link" href="{{path}}page={{this.nextPage}}">Next</a></li>
+            </ul>
+        </nav>
+    </div>
